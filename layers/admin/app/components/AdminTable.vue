@@ -53,7 +53,7 @@ const globalFilter = ref('');
       </tr>
     </template>
 
-    <template #loading>Caricamento</template>
+    <template #loading>Caricamento...</template>
     <template #empty>
       {{ data ? 'La ricerca non ha prodotto risultati' : 'Nessun dato' }}
     </template>

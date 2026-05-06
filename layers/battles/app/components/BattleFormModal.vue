@@ -47,7 +47,6 @@ const open = ref(false);
 const consentGiven = ref(false);
 
 function resetForm() {
-  console.log('reset form');
   state.value = getDefaultState();
   consentGiven.value = false;
 }
@@ -89,6 +88,9 @@ async function onSubmit(event: FormSubmitEvent<NewBattle>) {
 }
 
 const { data: playerStats } = useFetchApi('/api/player-stats');
+const { data: seasons } = useFetchApi('/api/seasons');
+
+const season = useNullAsUndefined(state, 'season');
 
 const players = computed(() => playerStats.value?.map((s) => s.player));
 
@@ -126,19 +128,29 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
 
     <template #fields="{ step }">
       <template v-if="step === 'common'">
-        <UFormField label="Data partita" name="date">
+        <UFormField label="Data partita" name="date" required>
           <InputDate v-model="date" autofocus />
         </UFormField>
-        <UFormField label="Punti partita" name="budget">
+        <UFormField label="Punti partita" name="budget" required>
           <USelect v-model="state.budget" :items="BUDGETS" class="w-50" />
+        </UFormField>
+        <UFormField label="Stagione" name="season">
+          <USelectMenu
+            v-model="season"
+            :items="seasons"
+            label-key="name"
+            value-key="name"
+            :filter-fields="['name', 'description']"
+            class="w-50"
+          />
         </UFormField>
       </template>
 
       <template v-else-if="step === 'player1'">
-        <UFormField label="Tuo nome" name="player1">
+        <UFormField label="Tuo nome" name="player1" required>
           <BattleFormPlayerNameInput v-model="state.player1" :players />
         </UFormField>
-        <UFormField label="Tua fazione" name="player1Faction">
+        <UFormField label="Tua fazione" name="player1Faction" required>
           <USelectMenu
             v-model="state.player1Faction"
             :items="FACTIONS"
@@ -151,10 +163,10 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
       </template>
 
       <template v-else>
-        <UFormField label="Nome avversario" name="player2">
+        <UFormField label="Nome avversario" name="player2" required>
           <BattleFormPlayerNameInput v-model="state.player2" :players />
         </UFormField>
-        <UFormField label="Fazione avversario" name="player2Faction">
+        <UFormField label="Fazione avversario" name="player2Faction" required>
           <USelectMenu
             v-model="state.player2Faction"
             :items="FACTIONS"
@@ -168,7 +180,12 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
           <UInputNumber v-model="state.player2Points" class="w-50" />
         </UFormField>
 
-        <UCheckbox v-if="!isEditMode" v-model="consentGiven" class="mt-2">
+        <UCheckbox
+          v-if="!isEditMode"
+          v-model="consentGiven"
+          class="mt-2"
+          required
+        >
           <template #label>
             Ho letto la
             <ULink to="/privacy" target="_blank">privacy policy</ULink>

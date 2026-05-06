@@ -3,7 +3,7 @@ import type { TableColumn } from '@nuxt/ui';
 
 useHead({ title: 'Gestione stagioni' });
 
-const { data, pending: loading } = useFetchApi('/api/seasons');
+const { data, pending: loading, refresh } = useFetchApi('/api/admin/seasons');
 
 const columns: TableColumn<Season>[] = [
   {
@@ -12,14 +12,16 @@ const columns: TableColumn<Season>[] = [
     meta: { class: { td: 'font-semibold' } },
   },
   {
-    accessorKey: 'startDate',
+    id: 'startDate',
     header: 'Inizio',
-    meta: { class: { th: 'w-30' } },
+    accessorFn: (row) => formatDate(row.startDate),
+    meta: { class: { th: 'w-35' } },
   },
   {
-    accessorKey: 'endDate',
+    id: 'endDate',
     header: 'Fine',
-    meta: { class: { th: 'w-30' } },
+    accessorFn: (row) => formatDate(row.endDate),
+    meta: { class: { th: 'w-35' } },
   },
   {
     id: 'actions',
@@ -33,26 +35,42 @@ const columns: TableColumn<Season>[] = [
   <AdminTable :data :columns :loading searchable>
     <template #body-bottom>
       <tr>
-        <td colspan="4" class="p-4">
-          <div class="flex justify-end">
-            <UButton :icon="AppIcons.GLOBE">Crea nuova stagione</UButton>
+        <td colspan="100%">
+          <div class="flex justify-end p-4 border-t border-t-accented">
+            <SeasonFormModal @submit="refresh">
+              <UButton :icon="AppIcons.GLOBE">Crea nuova stagione</UButton>
+            </SeasonFormModal>
           </div>
         </td>
       </tr>
     </template>
 
-    <template #expanded="{ row }">
-      {{ row.original.description }}
+    <template #name-cell="{ row }">
+      <div class="flex gap-4 items-center">
+        <NuxtImg
+          :src="row.original.coverImage"
+          width="75"
+          height="50"
+          fit="contain"
+          class="rounded-lg"
+        />
+        {{ row.original.name }}
+      </div>
     </template>
 
-    <template #actions-cell>
+    <template #actions-cell="{ row }">
       <div class="flex justify-center gap-2">
-        <UTooltip text="Modifica">
-          <UButton color="dark" :icon="AppIcons.EDIT" />
-        </UTooltip>
-        <UTooltip text="Elimina">
-          <UButton color="dark" :icon="AppIcons.DELETE" />
-        </UTooltip>
+        <SeasonFormModal :season="row.original" @submit="refresh">
+          <UTooltip text="Modifica">
+            <UButton color="dark" :icon="AppIcons.EDIT" />
+          </UTooltip>
+        </SeasonFormModal>
+
+        <DeleteModalButton
+          description="Confermi di voler eliminare questa stagione dai record?"
+          :endpoint="`/api/admin/seasons/${row.original.name}`"
+          @delete="refresh"
+        />
       </div>
     </template>
   </AdminTable>

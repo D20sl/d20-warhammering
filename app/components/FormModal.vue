@@ -71,7 +71,11 @@ function onSubmit(event: FormSubmitEvent<InferOutput<TSchema>>) {
 }
 
 function onError(event: FormErrorEvent) {
-  console.error(...event.errors);
+  console.error(
+    'Form error event',
+    ...event.errors.map((err) => `\n[${err.name}] ${err.message}`),
+  );
+
   emit('error', event);
 }
 

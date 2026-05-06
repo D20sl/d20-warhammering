@@ -3,7 +3,10 @@ import { it } from '@nuxt/ui/locale';
 </script>
 
 <template>
-  <UApp :locale="it" :tooltip="{ delayDuration: 0 }">
+  <UApp
+    :locale="it"
+    :tooltip="{ delayDuration: 0, ignoreNonKeyboardFocus: true }"
+  >
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />

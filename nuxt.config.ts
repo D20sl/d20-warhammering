@@ -46,4 +46,16 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+    // Dev/preview scheduler. In production each host needs its own cron wiring:
+    //   - Netlify: add a Netlify Scheduled Function with the same cron.
+    scheduledTasks: {
+      // Every Sunday at 03:00.
+      '0 3 * * 0': ['cleanup:uploads'],
+    },
+  },
 });

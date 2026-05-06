@@ -11,6 +11,7 @@ export default defineAppConfig({
         body: '!p-4',
       },
     },
+
     button: {
       compoundVariants: [
         {
@@ -40,6 +41,7 @@ export default defineAppConfig({
         },
       ],
     },
+
     badge: {
       compoundVariants: [
         {
@@ -64,14 +66,27 @@ export default defineAppConfig({
         },
       ],
     },
+
     tooltip: {
       slots: {
         content: 'bg-abyss',
       },
     },
+
     select: {
       slots: {
         content: 'bg-abyss',
+      },
+    },
+
+    fileUpload: {
+      variants: {
+        variant: {
+          area: {
+            base: 'border-accented cursor-pointer',
+            fileLeadingAvatar: '[&_img]:object-contain',
+          },
+        },
       },
     },
   },

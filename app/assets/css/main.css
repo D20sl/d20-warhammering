@@ -52,3 +52,16 @@
     background-color: rgb(255 255 255 / 0.25);
   }
 }
+
+@layer components {
+  /* UFileUpload doesn't react to FormField error state, unlike Input/Select.
+     Color the base red when its sibling error message is present. */
+  [data-slot='root']:has(~ [data-slot='error'])
+    > [data-slot='base'][data-dragging] {
+    border-color: var(--ui-error) !important;
+
+    * {
+      color: var(--ui-error) !important;
+    }
+  }
+}

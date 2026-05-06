@@ -40,27 +40,6 @@ function getWinner({ original: battle }: TableRow<Battle>) {
   if (battle.player1Points < battle.player2Points) return 2;
   return 0;
 }
-
-const deletingId = ref<number>();
-
-const toast = useToast();
-
-async function deleteBattle(id: number, close: () => void) {
-  deletingId.value = id;
-
-  const { success } = await fetchApi(`/api/admin/battles/${id}`, {
-    method: 'DELETE',
-  });
-
-  deletingId.value = undefined;
-
-  if (!success) return;
-
-  toast.add({ title: 'Partita eliminata' });
-
-  refresh();
-  close();
-}
 </script>
 
 <template>
@@ -128,17 +107,11 @@ async function deleteBattle(id: number, close: () => void) {
           </UTooltip>
         </BattleFormModal>
 
-        <ConfirmModal
-          description="Confermi di voler eliminare questa Partita dai record?"
-          confirm-text="Elimina"
-          confirm-color="secondary"
-          :confirm-pending="deletingId === row.original.id"
-          @confirm="(close) => deleteBattle(row.original.id, close)"
-        >
-          <UTooltip text="Elimina">
-            <UButton color="dark" :icon="AppIcons.DELETE" />
-          </UTooltip>
-        </ConfirmModal>
+        <DeleteModalButton
+          description="Confermi di voler eliminare questa partita dai record?"
+          :endpoint="`/api/admin/battles/${row.original.id}`"
+          @delete="refresh"
+        />
       </div>
     </template>
   </AdminTable>

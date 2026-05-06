@@ -1,12 +1,11 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
 
-export async function validateBody<TSchema extends v.GenericSchema>(
-  event: H3Event,
+export function validateInput<TSchema extends v.GenericSchema>(
   schema: TSchema,
-): Promise<v.InferOutput<TSchema>> {
-  const body = await readBody(event);
-  const result = v.safeParse(schema, body);
+  input: unknown,
+): v.InferOutput<TSchema> {
+  const result = v.safeParse(schema, input);
 
   if (!result.success) {
     throw createError({
@@ -17,4 +16,11 @@ export async function validateBody<TSchema extends v.GenericSchema>(
   }
 
   return result.output;
+}
+
+export async function validateBody<TSchema extends v.GenericSchema>(
+  event: H3Event,
+  schema: TSchema,
+): Promise<v.InferOutput<TSchema>> {
+  return validateInput(schema, await readBody(event));
 }

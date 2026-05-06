@@ -2,6 +2,8 @@
 useHead({
   title: 'Privacy Policy',
 });
+
+const website = location.origin;
 </script>
 
 <template>
@@ -25,13 +27,9 @@ useHead({
         La presente informativa è resa, ai sensi dell'art. 13 del Regolamento
         (UE) 2016/679 (di seguito «GDPR»), agli utenti che consultano il sito
         D20 Warhammering, raggiungibile all'indirizzo
-        <a
-          href="https://d20-warhammering.vercel.app"
-          class="underline"
-          target="_blank"
-          rel="noopener"
-          >https://d20-warhammering.vercel.app</a
-        >
+        <a :href="website" class="underline" target="_blank" rel="noopener">{{
+          website
+        }}</a>
         (di seguito, il «Sito»). L'informativa descrive le modalità con cui sono
         trattati i dati personali raccolti tramite il Sito ed è valida
         esclusivamente per esso, e non per altri siti web eventualmente
@@ -53,7 +51,7 @@ useHead({
         <strong>Via Moratti 15, Somma Lombardo (VA)</strong>, contattabile
         all'indirizzo email
         <a href="mailto:d20sommalombardo@gmail.com" class="underline">
-          d20sommalombardo@gmail.com </a
+          d20sommalombardo@gmail.com</a
         >.
       </p>
       <p>
@@ -176,10 +174,10 @@ useHead({
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>
           <strong>Vercel Inc.</strong> (hosting e distribuzione del Sito), con
-          sede negli Stati Uniti d'America. L'utilizzo del servizio comporta
-          il trasferimento di dati personali (in particolare i dati di
-          navigazione di cui alla sez. 4.a) verso un Paese terzo non
-          appartenente all'Unione Europea;
+          sede negli Stati Uniti d'America. L'utilizzo del servizio comporta il
+          trasferimento di dati personali (in particolare i dati di navigazione
+          di cui alla sez. 4.a) verso un Paese terzo non appartenente all'Unione
+          Europea;
         </li>
         <li>
           <strong>Neon Inc.</strong> (database PostgreSQL gestito), con regione

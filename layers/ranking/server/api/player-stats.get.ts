@@ -1,16 +1,21 @@
-import { eq, or } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import db from '~~/server/db';
 import { battlesTable, playersTable } from '~~/server/db/schema';
 
-export default eventHandler(async (): Promise<PlayerStats[]> => {
+export default eventHandler(async (event): Promise<PlayerStats[]> => {
+  const { season } = getQuery<{ season?: string }>(event);
+
   const query = await db
     .select()
     .from(playersTable)
     .leftJoin(
       battlesTable,
-      or(
-        eq(playersTable.name, battlesTable.player1),
-        eq(playersTable.name, battlesTable.player2),
+      and(
+        or(
+          eq(playersTable.name, battlesTable.player1),
+          eq(playersTable.name, battlesTable.player2),
+        ),
+        season ? eq(battlesTable.season, season) : undefined,
       ),
     );
 
@@ -35,6 +40,7 @@ export default eventHandler(async (): Promise<PlayerStats[]> => {
       acc[name].push({
         date: battles.date,
         budget: battles.budget,
+        season: battles.season,
         ownData: {
           points: ownPoints,
           faction: ownFaction,
