@@ -22,13 +22,12 @@ export default defineTask({
     let deleted = 0;
     let scanned = 0;
 
-    for await (const { blobs } of store.list({ paginate: true })) {
-      for (const blob of blobs) {
-        scanned++;
-        if (!referenced.has(blob.key)) {
-          await store.delete(blob.key);
-          deleted++;
-        }
+    for (const key of await store.getKeys()) {
+      scanned++;
+
+      if (!referenced.has(key)) {
+        await store.removeItem(key);
+        deleted++;
       }
     }
 

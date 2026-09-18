@@ -1,20 +1,24 @@
-import { getStore, type Store } from '@netlify/blobs';
 import type { MultiPartData } from 'h3';
 import { randomUUID } from 'node:crypto';
 
-const STORE_NAME = 'uploads';
+// Mounted as an fs driver in nuxt.config. On the VPS the Openship volume
+// declared in openship.json is what actually backs that path.
+const STORAGE_KEY = 'uploads';
 
-export function getUploadStore(): Store {
-  const siteID = process.env.NETLIFY_SITE_ID;
-  const token = process.env.NETLIFY_BLOBS_TOKEN;
+// The fs driver stores bytes and nothing else, so a blob's extension is the
+// only thing left to serve it back with. Mirrors SeasonFormModal's accept list.
+const EXTENSION_BY_TYPE: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+};
 
-  // On Netlify, env is auto-injected and manual config is unnecessary.
-  // Off-platform (local dev, Vercel), we must pass siteID + token explicitly.
-  if (siteID && token) {
-    return getStore({ name: STORE_NAME, siteID, token });
-  }
+const TYPE_BY_EXTENSION: Record<string, string> = Object.fromEntries(
+  Object.entries(EXTENSION_BY_TYPE).map(([type, ext]) => [ext, type]),
+);
 
-  return getStore(STORE_NAME);
+export function getUploadStore() {
+  return useStorage(STORAGE_KEY);
 }
 
 const UPLOADS_URL_PREFIX = '/uploads/';
@@ -28,19 +32,25 @@ export function keyFromUrl(url: string): string | null {
   return url.slice(UPLOADS_URL_PREFIX.length);
 }
 
+export function contentTypeForKey(key: string): string {
+  const ext = key.split('.').at(-1)?.toLowerCase();
+  return TYPE_BY_EXTENSION[ext ?? ''] ?? 'application/octet-stream';
+}
+
 export async function uploadImageBlob(file: MultiPartData): Promise<string> {
-  return '/img/wh.webp'; // temporary workaround before Netlify
+  const ext = file.type && EXTENSION_BY_TYPE[file.type];
 
-  const ext = file.filename?.split('.').at(-1);
+  if (!ext) {
+    throw createError({
+      status: 400,
+      statusMessage: 'Bad Request',
+      message: "L'immagine deve essere in formato JPEG, PNG o WebP",
+    });
+  }
+
   const key = `${randomUUID()}.${ext}`;
-  const body = file.data.buffer.slice(
-    file.data.byteOffset,
-    file.data.byteOffset + file.data.byteLength,
-  ) as ArrayBuffer;
 
-  await getUploadStore().set(key, body, {
-    metadata: { contentType: file.type },
-  });
+  await getUploadStore().setItemRaw(key, file.data);
 
   return urlForKey(key);
 }

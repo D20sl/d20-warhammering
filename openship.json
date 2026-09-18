@@ -1,0 +1,3 @@
+{
+  "volumes": ["uploads:/app/.data/uploads"]
+}

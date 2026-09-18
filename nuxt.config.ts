@@ -48,11 +48,22 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    storage: {
+      // Backed by the Openship volume declared in openship.json. Locally this
+      // resolves to the gitignored .data directory.
+      uploads: {
+        driver: 'fs',
+        base: './.data/uploads',
+      },
+    },
+
     experimental: {
       tasks: true,
     },
-    // Dev/preview scheduler. In production each host needs its own cron wiring:
-    //   - Netlify: add a Netlify Scheduled Function with the same cron.
+    // Runs in-process under the node-server preset, so it needs no cron wiring
+    // from the host: Openship has instance-level cron Jobs, but nothing that can
+    // be declared in openship.json. Assumes a single replica - scale past one
+    // and the task fires once per copy.
     scheduledTasks: {
       // Every Sunday at 03:00.
       '0 3 * * 0': ['cleanup:uploads'],

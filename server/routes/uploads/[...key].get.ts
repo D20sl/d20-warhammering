@@ -1,4 +1,7 @@
-import { getUploadStore } from '~~/server/utils/blob-storage';
+import {
+  contentTypeForKey,
+  getUploadStore,
+} from '~~/server/utils/blob-storage';
 
 export default eventHandler(async (event) => {
   const key = getRouterParam(event, 'key');
@@ -7,25 +10,37 @@ export default eventHandler(async (event) => {
     throw createError({ status: 404 });
   }
 
-  const store = getUploadStore();
-  const result = await store.getWithMetadata(key, { type: 'arrayBuffer' });
-
-  if (!result) {
+  // Blobs are flat `<uuid>.<ext>` keys. The fs driver throws on `..`
+  // segments, which surfaces as a 500, so treat path-shaped keys as a miss.
+  if (key.includes('/') || key.includes('\\') || key.includes('..')) {
     throw createError({ status: 404 });
   }
 
-  const contentType =
-    (result.metadata?.contentType as string | undefined) ??
-    'application/octet-stream';
+  const store = getUploadStore();
+  const data = await store.getItemRaw<Buffer>(key);
 
-  setResponseHeader(event, 'Content-Type', contentType);
+  if (!data) {
+    throw createError({ status: 404 });
+  }
+
+  setResponseHeader(event, 'Content-Type', contentTypeForKey(key));
   setResponseHeader(
     event,
     'Cache-Control',
     'public, max-age=31536000, immutable',
   );
 
-  if (result.etag) setResponseHeader(event, 'ETag', result.etag);
+  // Keys are content-addressed by UUID, so size + mtime is enough to tell two
+  // blobs apart without hashing the bytes on every request.
+  const meta = await store.getMeta(key);
 
-  return new Uint8Array(result.data);
+  if (meta?.size && meta?.mtime) {
+    setResponseHeader(
+      event,
+      'ETag',
+      `"${meta.size}-${new Date(meta.mtime).getTime()}"`,
+    );
+  }
+
+  return data;
 });
