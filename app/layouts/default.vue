@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const props = defineProps<{ isHome?: boolean }>();
+defineProps<{ isHome?: boolean }>();
+
+const { loggedIn, user } = useUserSession();
+
+const route = useRoute();
 
 defineShortcuts({
   'meta_<': () => navigateTo('/admin'),
@@ -13,15 +17,49 @@ defineShortcuts({
   >
     <HeaderLogos :small="!isHome" />
 
-    <UButton
-      v-if="!isHome"
-      to="/"
-      size="sm"
-      :icon="AppIcons.HOME"
-      color="dark"
-    >
-      Home
-    </UButton>
+    <div class="flex gap-2">
+      <UButton
+        v-if="!isHome"
+        to="/"
+        size="sm"
+        :icon="AppIcons.HOME"
+        color="dark"
+      >
+        Home
+      </UButton>
+
+      <UButton
+        v-if="isAdmin(user) && route.path !== '/admin'"
+        to="/admin"
+        size="sm"
+        :icon="AppIcons.SETTINGS"
+        color="dark"
+      >
+        Dashboard
+      </UButton>
+
+      <UButton
+        v-if="loggedIn"
+        :to="logoutUrl()"
+        size="sm"
+        :icon="AppIcons.LOCK_OPEN"
+        color="dark"
+        external
+      >
+        Logout
+      </UButton>
+
+      <UButton
+        v-else
+        :to="loginUrl(route.fullPath)"
+        size="sm"
+        :icon="AppIcons.USER"
+        color="dark"
+        external
+      >
+        Login
+      </UButton>
+    </div>
 
     <slot />
 

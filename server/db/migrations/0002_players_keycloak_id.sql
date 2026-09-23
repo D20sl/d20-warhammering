@@ -1,0 +1,2 @@
+ALTER TABLE "d20_warhammering"."players" ADD COLUMN "keycloak_id" text;--> statement-breakpoint
+ALTER TABLE "d20_warhammering"."players" ADD CONSTRAINT "players_keycloakId_unique" UNIQUE("keycloak_id");

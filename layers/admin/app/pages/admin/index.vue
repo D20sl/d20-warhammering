@@ -2,13 +2,6 @@
 useHead({
   title: 'Admin',
 });
-
-definePageMeta({
-  layout: {
-    name: 'admin',
-    props: { isDashboard: true },
-  },
-});
 </script>
 
 <template>

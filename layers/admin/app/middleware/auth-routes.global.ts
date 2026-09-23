@@ -1,7 +1,18 @@
 export default defineNuxtRouteMiddleware((to) => {
-  const { loggedIn } = useUserSession();
+  if (!to.path.startsWith('/admin')) return;
 
-  if (to.path === '/login' && loggedIn.value) return navigateTo('/admin');
-  if (to.path.startsWith('/admin') && !loggedIn.value)
-    return navigateTo('/login');
+  const { loggedIn, user } = useUserSession();
+
+  if (!loggedIn.value) {
+    return navigateTo(loginUrl(to.fullPath), { external: true });
+  }
+
+  if (!isAdmin(user.value)) {
+    return abortNavigation(
+      createError({
+        statusCode: 403,
+        statusMessage: 'Non hai i permessi per questa sezione',
+      }),
+    );
+  }
 });

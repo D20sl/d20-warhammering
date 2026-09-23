@@ -3,7 +3,7 @@ import type { TableColumn } from '@nuxt/ui';
 
 useHead({ title: 'Gestione giocatori' });
 
-const { data, pending: loading, refresh } = useFetchApi('/api/players');
+const { data, pending: loading, refresh } = useFetchApi('/api/admin/players');
 
 const columns: TableColumn<Player>[] = [
   {
@@ -12,9 +12,14 @@ const columns: TableColumn<Player>[] = [
     meta: { class: { td: 'font-semibold' } },
   },
   {
+    id: 'linked',
+    header: 'Collegamento a Keycloak',
+    meta: { class: { th: 'w-60 text-center', td: 'text-center' } },
+  },
+  {
     id: 'actions',
     header: 'Azioni',
-    meta: { class: { th: 'w-30 text-center' } },
+    meta: { class: { th: 'w-30 text-center', td: 'text-center' } },
   },
 ];
 
@@ -43,24 +48,28 @@ async function deletePlayer(name: string, close: () => void) {
 
 <template>
   <AdminTable :data :columns :loading searchable>
-    <template #actions-cell="{ row }">
-      <div class="flex justify-center gap-2">
-        <UTooltip text="Modifica">
-          <UButton color="dark" :icon="AppIcons.EDIT" />
-        </UTooltip>
+    <template #linked-cell="{ row }">
+      <UBadge
+        v-if="row.original.keycloakId"
+        variant="soft"
+        color="success"
+        label="Collegato"
+      />
+      <UBadge v-else variant="soft" color="error" label="Scollegato" />
+    </template>
 
-        <ConfirmModal
-          :description="`Confermi di voler eliminare ${row.original.name}? Verranno cancellate anche tutte le sue partite.`"
-          confirm-text="Elimina"
-          confirm-color="secondary"
-          :confirm-pending="deletingName === row.original.name"
-          @confirm="(close) => deletePlayer(row.original.name, close)"
-        >
-          <UTooltip text="Elimina">
-            <UButton color="dark" :icon="AppIcons.DELETE" />
-          </UTooltip>
-        </ConfirmModal>
-      </div>
+    <template #actions-cell="{ row }">
+      <ConfirmModal
+        :description="`Confermi di voler eliminare ${row.original.name}? Verranno cancellate anche tutte le sue partite.`"
+        confirm-text="Elimina"
+        confirm-color="secondary"
+        :confirm-pending="deletingName === row.original.name"
+        @confirm="(close) => deletePlayer(row.original.name, close)"
+      >
+        <UTooltip text="Elimina">
+          <UButton color="dark" :icon="AppIcons.DELETE" />
+        </UTooltip>
+      </ConfirmModal>
     </template>
   </AdminTable>
 </template>

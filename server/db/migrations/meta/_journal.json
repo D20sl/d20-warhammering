@@ -15,6 +15,13 @@
       "when": 1777370250189,
       "tag": "0001_seasons",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790261124150,
+      "tag": "0002_players_keycloak_id",
+      "breakpoints": true
     }
   ]
 }

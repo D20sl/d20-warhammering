@@ -18,6 +18,8 @@ export const seasonsTable = d20schema.table('seasons', {
 
 export const playersTable = d20schema.table('players', {
   name: text().primaryKey(),
+
+  keycloakId: text().unique(),
 });
 
 export const battlesTable = d20schema.table('battles', {

@@ -18,13 +18,33 @@ const emit = defineEmits<{
 
 const isEditMode = computed(() => !!props.battle?.id);
 
+const labels = computed(() =>
+  isEditMode.value
+    ? {
+        player1Faction: 'Fazione giocatore 1',
+        player1Points: 'Punti giocatore 1',
+        player2: 'Giocatore 2',
+        player2Faction: 'Fazione giocatore 2',
+        player2Points: 'Punti giocatore 2',
+      }
+    : {
+        player1Faction: 'Tua fazione',
+        player1Points: 'Quanti punti hai fatto?',
+        player2: 'Avversario',
+        player2Faction: 'Fazione avversario',
+        player2Points: "Quanti punti ha fatto l'avversario?",
+      },
+);
+
+const { user } = useUserSession();
+
 function getDefaultState(): NewBattle {
   if (props.battle) return { ...props.battle };
   return {
     budget: 1000,
     date: today(getLocalTimeZone()).toString(),
 
-    player1: '',
+    player1: user.value!.displayName,
     player1Points: 0,
     player1Faction: '',
 
@@ -49,6 +69,8 @@ const consentGiven = ref(false);
 function resetForm() {
   state.value = getDefaultState();
   consentGiven.value = false;
+
+  if (!isEditMode.value) assumeFactionForPlayer(1)(state.value.player1);
 }
 
 const FORM_STEPS = ['common', 'player1', 'player2'];
@@ -66,7 +88,9 @@ async function onSubmit(event: FormSubmitEvent<NewBattle>) {
   loading.value = true;
 
   const { success } = await fetchApi(
-    '/api/battles' + (isEditMode.value ? `/${props.battle!.id}` : ''),
+    isEditMode.value
+      ? `/api/admin/battles/${props.battle!.id}`
+      : '/api/battles',
     {
       method: isEditMode.value ? 'PUT' : 'POST',
       body: event.data,
@@ -92,7 +116,11 @@ const { data: seasons } = useFetchApi('/api/seasons');
 
 const season = useNullAsUndefined(state, 'season');
 
-const players = computed(() => playerStats.value?.map((s) => s.player));
+const players = computed(() => playerStats.value?.map((s) => s.player) ?? []);
+
+function playersExcept(name: string) {
+  return players.value.filter((p) => p !== name);
+}
 
 function assumeFactionForPlayer(player: 1 | 2) {
   return (name: string) => {
@@ -147,36 +175,57 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
       </template>
 
       <template v-else-if="step === 'player1'">
-        <UFormField label="Tuo nome" name="player1" required>
-          <BattleFormPlayerNameInput v-model="state.player1" :players />
-        </UFormField>
-        <UFormField label="Tua fazione" name="player1Faction" required>
+        <UFormField
+          v-if="isEditMode"
+          label="Giocatore 1"
+          name="player1"
+          required
+        >
           <USelectMenu
-            v-model="state.player1Faction"
-            :items="FACTIONS"
+            v-model="state.player1"
+            :items="playersExcept(state.player2)"
+            autofocus
             class="w-50"
           />
         </UFormField>
-        <UFormField label="Quanti punti hai fatto?" name="player1Points">
+        <UFormField
+          :label="labels.player1Faction"
+          name="player1Faction"
+          required
+        >
+          <USelectMenu
+            v-model="state.player1Faction"
+            :items="FACTIONS"
+            :autofocus="!isEditMode"
+            class="w-50"
+          />
+        </UFormField>
+        <UFormField :label="labels.player1Points" name="player1Points">
           <UInputNumber v-model="state.player1Points" class="w-50" />
         </UFormField>
       </template>
 
       <template v-else>
-        <UFormField label="Nome avversario" name="player2" required>
-          <BattleFormPlayerNameInput v-model="state.player2" :players />
+        <UFormField :label="labels.player2" name="player2" required>
+          <USelectMenu
+            v-model="state.player2"
+            :items="playersExcept(state.player1)"
+            autofocus
+            class="w-50"
+          />
         </UFormField>
-        <UFormField label="Fazione avversario" name="player2Faction" required>
+        <UFormField
+          :label="labels.player2Faction"
+          name="player2Faction"
+          required
+        >
           <USelectMenu
             v-model="state.player2Faction"
             :items="FACTIONS"
             class="w-50"
           />
         </UFormField>
-        <UFormField
-          label="Quanti punti ha fatto l'avversario?"
-          name="player2Points"
-        >
+        <UFormField :label="labels.player2Points" name="player2Points">
           <UInputNumber v-model="state.player2Points" class="w-50" />
         </UFormField>
 

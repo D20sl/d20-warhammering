@@ -3,6 +3,7 @@ export enum AppIcons {
   EDIT = 'material-symbols:edit',
   DELETE = 'material-symbols:delete',
   UPLOAD = 'material-symbols:upload',
+  COPY = 'material-symbols:content-copy',
 
   // Layout / navigation
   HOME = 'material-symbols:home',

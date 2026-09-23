@@ -1,0 +1,211 @@
+{
+  "id": "c76fa050-ee94-479d-894d-0d62d6ae990f",
+  "prevId": "cdb0f370-a94c-4d7e-9f16-a4ade1c54bc1",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "d20_warhammering.battles": {
+      "name": "battles",
+      "schema": "d20_warhammering",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "budget": {
+          "name": "budget",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "name": "season",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "player1": {
+          "name": "player1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player1_points": {
+          "name": "player1_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player1_faction": {
+          "name": "player1_faction",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player2": {
+          "name": "player2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player2_points": {
+          "name": "player2_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player2_faction": {
+          "name": "player2_faction",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "battles_season_seasons_name_fk": {
+          "name": "battles_season_seasons_name_fk",
+          "tableFrom": "battles",
+          "tableTo": "seasons",
+          "schemaTo": "d20_warhammering",
+          "columnsFrom": [
+            "season"
+          ],
+          "columnsTo": [
+            "name"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "battles_player1_players_name_fk": {
+          "name": "battles_player1_players_name_fk",
+          "tableFrom": "battles",
+          "tableTo": "players",
+          "schemaTo": "d20_warhammering",
+          "columnsFrom": [
+            "player1"
+          ],
+          "columnsTo": [
+            "name"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "battles_player2_players_name_fk": {
+          "name": "battles_player2_players_name_fk",
+          "tableFrom": "battles",
+          "tableTo": "players",
+          "schemaTo": "d20_warhammering",
+          "columnsFrom": [
+            "player2"
+          ],
+          "columnsTo": [
+            "name"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "d20_warhammering.players": {
+      "name": "players",
+      "schema": "d20_warhammering",
+      "columns": {
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "keycloak_id": {
+          "name": "keycloak_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "players_keycloakId_unique": {
+          "name": "players_keycloakId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "keycloak_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "d20_warhammering.seasons": {
+      "name": "seasons",
+      "schema": "d20_warhammering",
+      "columns": {
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cover_image": {
+          "name": "cover_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

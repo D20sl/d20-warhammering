@@ -9,6 +9,8 @@ definePageMeta({
     props: { isHome: true },
   },
 });
+
+const { loggedIn } = useUserSession();
 </script>
 
 <template>
@@ -17,12 +19,8 @@ definePageMeta({
       Classifica Lega
     </UButton>
 
-    <BattleFormModal>
-      <UButton
-        size="xl"
-        color="secondary"
-        :icon="AppIcons.SWORDS_OUTLINE"
-      >
+    <BattleFormModal v-if="loggedIn">
+      <UButton size="xl" color="secondary" :icon="AppIcons.SWORDS_OUTLINE">
         Registra partita
       </UButton>
     </BattleFormModal>
