@@ -2,7 +2,7 @@ import db from '~~/server/db';
 
 export default defineTask({
   meta: {
-    name: 'cleanup:uploads',
+    name: 'cleanup-uploads',
     description: 'Delete blobs not referenced by any DB row',
   },
   async run() {

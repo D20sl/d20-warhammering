@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     // and the task fires once per copy.
     scheduledTasks: {
       // Every Sunday at 03:00.
-      '0 3 * * 0': ['cleanup:uploads'],
+      '0 3 * * 0': ['cleanup-uploads'],
     },
   },
 });
