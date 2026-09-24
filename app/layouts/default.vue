@@ -38,16 +38,7 @@ defineShortcuts({
         Dashboard
       </UButton>
 
-      <UButton
-        v-if="loggedIn"
-        :to="logoutUrl()"
-        size="sm"
-        :icon="AppIcons.LOCK_OPEN"
-        color="dark"
-        external
-      >
-        Logout
-      </UButton>
+      <AccountModal v-if="loggedIn" />
 
       <UButton
         v-else

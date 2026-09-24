@@ -7,3 +7,7 @@ export function loginUrl(redirect?: string) {
 export function logoutUrl() {
   return '/logout';
 }
+
+export function accountUrl() {
+  return '/account';
+}
