@@ -53,6 +53,10 @@ async function scrollIntoAccordionItem(indexStr?: string | string[]) {
 }
 
 const searchInput = ref('');
+
+const isFiltering = computed(
+  () => !!season.value || !!searchInput.value.trim(),
+);
 </script>
 
 <template>
@@ -117,7 +121,7 @@ const searchInput = ref('');
 
     <p v-else class="text-muted text-sm text-center py-4">
       {{
-        stats?.length
+        isFiltering
           ? 'La ricerca non ha prodotto risultati'
           : 'Nessun dato disponibile'
       }}
