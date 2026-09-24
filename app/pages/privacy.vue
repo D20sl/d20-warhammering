@@ -3,7 +3,7 @@ useHead({
   title: 'Privacy Policy',
 });
 
-const website = location.origin;
+const website = useRequestURL().origin;
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const website = location.origin;
       <p class="text-muted">
         Resa ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 (GDPR)
       </p>
-      <p class="text-muted">Ultimo aggiornamento: 4 maggio 2026</p>
+      <p class="text-muted">Ultimo aggiornamento: 25 settembre 2026</p>
     </header>
 
     <section class="space-y-2">
@@ -70,6 +70,11 @@ const website = location.origin;
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>
+          <strong>Esecuzione di un servizio richiesto dall'interessato</strong>
+          (art. 6, par. 1, lett. b, GDPR) per la creazione e la gestione
+          dell'account utente e per l'accesso al Sito;
+        </li>
+        <li>
           <strong>Legittimo interesse</strong> del Titolare (art. 6, par. 1,
           lett. f, GDPR) nella tenuta dello storico delle partite e della
           classifica della lega per i partecipanti al gruppo di gioco, nonché
@@ -83,10 +88,11 @@ const website = location.origin;
         </li>
       </ul>
       <p>
-        L'inserimento dei dati nel Sito è facoltativo. Il rifiuto di conferirli
-        rende impossibile la registrazione della partita e l'apparizione del
-        giocatore nella classifica, ma non comporta alcuna ulteriore
-        conseguenza.
+        La creazione di un account e l'inserimento dei dati nel Sito sono
+        facoltativi. Il rifiuto di conferirli rende impossibile l'accesso, la
+        registrazione della partita e l'apparizione del giocatore nella
+        classifica, ma non comporta alcuna ulteriore conseguenza. La
+        consultazione della classifica non richiede un account.
       </p>
     </section>
 
@@ -111,14 +117,56 @@ const website = location.origin;
         metodo utilizzato nel sottoporre la richiesta al server, la dimensione
         del file ottenuto in risposta ed altri parametri relativi al sistema
         operativo e all'ambiente informatico dell'utente. Tali dati sono
-        trattati dal fornitore di hosting (cfr. sez. 5) per il tempo
-        strettamente necessario allo scopo.
+        registrati nei log tecnici del server che ospita il Sito (cfr. sez. 5)
+        e trattati per il tempo strettamente necessario alla diagnostica ed
+        alla sicurezza del servizio.
       </p>
 
-      <h3 class="font-semibold mt-2">b) Dati comunicati dall'utente</h3>
+      <h3 class="font-semibold mt-2">b) Dati dell'account</h3>
       <p>
-        Tramite il modulo di registrazione partita, accessibile dalla homepage,
-        vengono raccolti i seguenti dati:
+        Per registrare una partita è necessario accedere con un account D20.
+        La creazione dell'account e l'accesso sono gestiti da un servizio di
+        autenticazione (Keycloak) installato sul server del Titolare. In fase
+        di registrazione vengono raccolti:
+      </p>
+      <ul class="list-disc list-inside space-y-1 ml-2">
+        <li>indirizzo email;</li>
+        <li>nome e cognome;</li>
+        <li>nome utente;</li>
+        <li>
+          password, conservata esclusivamente in forma cifrata (hash) e mai
+          leggibile dal Titolare.
+        </li>
+      </ul>
+      <p>
+        In alternativa, l'utente può scegliere di accedere con il proprio
+        account Google. In tal caso Google comunica al Sito nome, cognome e
+        indirizzo email dell'utente, e il trattamento dei dati da parte di
+        Google è regolato dalla
+        <a
+          href="https://policies.google.com/privacy"
+          class="underline"
+          target="_blank"
+          rel="noopener"
+          >privacy policy di Google</a
+        >.
+      </p>
+      <p>
+        Il Sito conserva nel proprio database soltanto il nome e cognome
+        dell'utente ed un identificativo tecnico dell'account. Il nome e cognome
+        è utilizzato come nome del giocatore ed è quindi pubblicato nella
+        classifica (cfr. punto c).
+      </p>
+      <p>
+        Lo stesso account consente l'accesso anche agli altri servizi online di
+        D20, attuali e futuri, gestiti dal medesimo Titolare.
+      </p>
+
+      <h3 class="font-semibold mt-2">c) Dati delle partite</h3>
+      <p>
+        Tramite il modulo di registrazione partita, accessibile dalla homepage
+        agli utenti che hanno effettuato l'accesso, vengono raccolti i seguenti
+        dati:
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>nome (o nickname) dei due giocatori partecipanti alla partita;</li>
@@ -148,7 +196,7 @@ const website = location.origin;
       </p>
 
       <h3 class="font-semibold mt-2">
-        c) Cookie e altri sistemi di tracciamento
+        d) Cookie e altri sistemi di tracciamento
       </h3>
       <p>
         Il Sito non utilizza cookie di profilazione, né strumenti di analisi del
@@ -156,11 +204,26 @@ const website = location.origin;
       </p>
       <p>
         Il Sito utilizza esclusivamente
-        <strong>cookie tecnici di sessione</strong>, finalizzati
-        all'autenticazione dell'amministratore nell'area di gestione del Sito.
-        Tali cookie hanno una durata massima di 24 ore e non richiedono consenso
-        preventivo, ai sensi del Provvedimento del Garante per la protezione dei
-        dati personali del 10 giugno 2021 (doc. web n. 9677876).
+        <strong>cookie tecnici</strong>, necessari all'accesso degli utenti:
+      </p>
+      <ul class="list-disc list-inside space-y-1 ml-2">
+        <li>
+          un cookie di sessione, che mantiene l'utente collegato al Sito per un
+          massimo di 24 ore;
+        </li>
+        <li>
+          un cookie temporaneo, che durante l'accesso ricorda la pagina a cui
+          riportare l'utente, con durata massima di 10 minuti;
+        </li>
+        <li>
+          i cookie del servizio di autenticazione, che mantengono attiva la
+          sessione sull'account D20 fino alla sua scadenza o al logout.
+        </li>
+      </ul>
+      <p>
+        Tali cookie non richiedono consenso preventivo, ai sensi del
+        Provvedimento del Garante per la protezione dei dati personali del 10
+        giugno 2021 (doc. web n. 9677876).
       </p>
     </section>
 
@@ -173,16 +236,20 @@ const website = location.origin;
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>
-          <strong>Vercel Inc.</strong> (hosting e distribuzione del Sito), con
-          sede negli Stati Uniti d'America. L'utilizzo del servizio comporta il
-          trasferimento di dati personali (in particolare i dati di navigazione
-          di cui alla sez. 4.a) verso un Paese terzo non appartenente all'Unione
-          Europea;
+          <strong>OVHcloud</strong>, fornitore del server virtuale su cui il
+          Titolare ospita il Sito ed il servizio di autenticazione. Il server si
+          trova in Canada. Il trasferimento dei dati verso il Canada avviene
+          sulla base della decisione di adeguatezza della Commissione Europea
+          (Decisione 2002/2/CE), ai sensi dell'art. 45 GDPR;
         </li>
         <li>
           <strong>Neon Inc.</strong> (database PostgreSQL gestito), con regione
           di archiviazione situata nell'Unione Europea (Francoforte,
-          eu-central-1).
+          eu-central-1);
+        </li>
+        <li>
+          <strong>Google</strong>, limitatamente agli utenti che scelgono di
+          accedere con il proprio account Google (cfr. sez. 4.b).
         </li>
       </ul>
       <p>
@@ -203,12 +270,16 @@ const website = location.origin;
           per tutto il periodo di attività della lega; saranno cancellati su
           richiesta dell'interessato o al termine dell'attività del Sito;
         </li>
-        <li><strong>Cookie di sessione amministrativa:</strong> 24 ore;</li>
         <li>
-          <strong>Log di navigazione tecnica:</strong> conservati dal fornitore
-          di hosting per il tempo necessario alla diagnostica ed alla sicurezza
-          del servizio, e comunque non oltre i termini previsti dalla policy del
-          fornitore stesso.
+          <strong>Dati dell'account:</strong> conservati fino alla
+          cancellazione dell'account, che l'utente può richiedere in qualunque
+          momento al Titolare;
+        </li>
+        <li><strong>Cookie di sessione:</strong> massimo 24 ore;</li>
+        <li>
+          <strong>Log di navigazione tecnica:</strong> conservati sul server
+          del Titolare per il tempo necessario alla diagnostica ed alla
+          sicurezza del servizio.
         </li>
       </ul>
     </section>
