@@ -47,13 +47,14 @@ const columns: TableColumn<Season>[] = [
 
     <template #name-cell="{ row }">
       <div class="flex gap-4 items-center">
-        <NuxtImg
-          :src="row.original.coverImage"
-          width="75"
-          height="50"
-          fit="contain"
-          class="rounded-lg"
-        />
+        <div class="size-25 rounded-lg bg-black">
+          <NuxtImg
+            :src="row.original.coverImage"
+            provider="none"
+            class="size-full rounded-lg object-contain"
+          />
+        </div>
+
         {{ row.original.name }}
       </div>
     </template>

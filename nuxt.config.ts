@@ -27,6 +27,12 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
   ],
 
+  image: {
+    // IPX only reads from public/, so uploads served by a Nitro route must
+    // skip it and load straight from their URL.
+    none: {},
+  },
+
   colorMode: {
     preference: 'dark',
   },

@@ -38,11 +38,18 @@ const labels = computed(() =>
 
 const { user } = useUserSession();
 
+const { data: seasons } = useFetchApi('/api/seasons', {
+  query: { showAll: isEditMode.value },
+});
+
 function getDefaultState(): NewBattle {
   if (props.battle) return { ...props.battle };
   return {
     budget: 1000,
     date: today(getLocalTimeZone()).toString(),
+
+    season:
+      seasons.value?.length === 1 ? seasons.value[0]!.name : undefined,
 
     player1: user.value!.displayName,
     player1Points: 0,
@@ -112,7 +119,6 @@ async function onSubmit(event: FormSubmitEvent<NewBattle>) {
 }
 
 const { data: playerStats } = useFetchApi('/api/player-stats');
-const { data: seasons } = useFetchApi('/api/seasons');
 
 const season = useNullAsUndefined(state, 'season');
 
@@ -162,7 +168,7 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
         <UFormField label="Punti partita" name="budget" required>
           <USelect v-model="state.budget" :items="BUDGETS" class="w-50" />
         </UFormField>
-        <UFormField label="Stagione" name="season">
+        <UFormField v-if="seasons?.length" label="Stagione" name="season">
           <USelectMenu
             v-model="season"
             :items="seasons"

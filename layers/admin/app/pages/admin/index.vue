@@ -40,12 +40,7 @@ useHead({
           Stagioni
         </UButton>
 
-        <UButton
-          to="/admin/categories"
-          size="xl"
-          color="dark"
-          :icon="AppIcons.VIDEOGAME"
-        >
+        <UButton disabled size="xl" color="dark" :icon="AppIcons.VIDEOGAME">
           Categorie
         </UButton>
       </div>
