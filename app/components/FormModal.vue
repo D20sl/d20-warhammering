@@ -80,8 +80,7 @@ function onError(event: FormErrorEvent) {
 }
 
 const modalUi = useMergedSlotClasses(props.modalUi, {
-  header: 'border-b-accented',
-  content: 'h-full',
+  content: 'h-125 md:h-135',
   body: 'p-0!',
 });
 </script>

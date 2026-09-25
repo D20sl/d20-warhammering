@@ -1,4 +1,4 @@
-import { and, desc, gte, isNotNull, isNull, lte, or } from 'drizzle-orm';
+import { and, gte, isNotNull, isNull, lte, or } from 'drizzle-orm';
 import db from '~~/server/db';
 import { seasonsTable } from '~~/server/db/schema';
 
@@ -17,6 +17,6 @@ export default eventHandler(async (event): Promise<Season[]> => {
 
   return await db.query.seasonsTable.findMany({
     where: showAll === 'true' ? undefined : isActive(today),
-    orderBy: desc(seasonsTable.startDate),
+    orderBy: seasonsOrder(),
   });
 });

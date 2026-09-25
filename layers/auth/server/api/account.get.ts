@@ -2,7 +2,7 @@ import { eq, or } from 'drizzle-orm';
 import db from '~~/server/db';
 import { battlesTable, playersTable } from '~~/server/db/schema';
 
-export default eventHandler(async (event) => {
+export default eventHandler(async (event): Promise<Account> => {
   const { user } = await requireUserSession(event);
 
   const player = await db.query.playersTable.findFirst({

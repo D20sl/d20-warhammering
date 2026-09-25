@@ -20,6 +20,7 @@ export type PlayerStats = {
 };
 
 export type BattleStats = {
+  id: number;
   date: Date | string;
   budget: number;
   season?: string | null;

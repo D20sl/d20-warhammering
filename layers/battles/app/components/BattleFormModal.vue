@@ -48,8 +48,7 @@ function getDefaultState(): NewBattle {
     budget: 1000,
     date: today(getLocalTimeZone()).toString(),
 
-    season:
-      seasons.value?.length === 1 ? seasons.value[0]!.name : undefined,
+    season: seasons.value?.length === 1 ? seasons.value[0]!.name : undefined,
 
     player1: user.value!.displayName,
     player1Points: 0,
@@ -80,11 +79,18 @@ function resetForm() {
   if (!isEditMode.value) assumeFactionForPlayer(1)(state.value.player1);
 }
 
-const FORM_STEPS = ['common', 'player1', 'player2'];
-type FormStep = (typeof FORM_STEPS)[number];
+const ALL_FORM_STEPS = ['common', 'season', 'player1', 'player2'];
+type FormStep = (typeof ALL_FORM_STEPS)[number];
+
+const formSteps = computed(() =>
+  seasons.value?.length
+    ? ALL_FORM_STEPS
+    : ALL_FORM_STEPS.filter((s) => s !== 'season'),
+);
 
 const STEP_FIELDS: Record<FormStep, Exclude<keyof NewBattle, 'id'>[]> = {
   common: ['date', 'budget'],
+  season: ['season'],
   player1: ['player1', 'player1Faction', 'player1Points'],
   player2: ['player2', 'player2Faction', 'player2Points'],
 };
@@ -118,9 +124,7 @@ async function onSubmit(event: FormSubmitEvent<NewBattle>) {
   emit('submit');
 }
 
-const { data: playerStats } = useFetchApi('/api/player-stats');
-
-const season = useNullAsUndefined(state, 'season');
+const { data: playerStats } = useFetchPlayerStats();
 
 const players = computed(() => playerStats.value?.map((s) => s.player) ?? []);
 
@@ -150,11 +154,10 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
     :description="`La partita verrà ${isEditMode ? 'modificata nel' : 'aggiunta al'} database`"
     :schema="battleSchema"
     :state
-    :steps="FORM_STEPS"
+    :steps="formSteps"
     :step-fields="STEP_FIELDS"
     :loading
     :disabled="!isEditMode && !consentGiven"
-    :modal-ui="{ content: 'h-125' }"
     @submit="onSubmit"
     @open="resetForm"
   >
@@ -165,20 +168,14 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
         <UFormField label="Data partita" name="date" required>
           <InputDate v-model="date" autofocus />
         </UFormField>
-        <UFormField label="Punti partita" name="budget" required>
-          <USelect v-model="state.budget" :items="BUDGETS" class="w-50" />
-        </UFormField>
-        <UFormField v-if="seasons?.length" label="Stagione" name="season">
-          <USelectMenu
-            v-model="season"
-            :items="seasons"
-            label-key="name"
-            value-key="name"
-            :filter-fields="['name', 'description']"
-            class="w-50"
-          />
-        </UFormField>
+        <BattleBudgetField v-model="state.budget" />
       </template>
+
+      <BattleSeasonField
+        v-else-if="step === 'season'"
+        v-model="state.season"
+        :seasons
+      />
 
       <template v-else-if="step === 'player1'">
         <UFormField
@@ -206,7 +203,7 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
             class="w-50"
           />
         </UFormField>
-        <UFormField :label="labels.player1Points" name="player1Points">
+        <UFormField :label="labels.player1Points" name="player1Points" required>
           <UInputNumber v-model="state.player1Points" class="w-50" />
         </UFormField>
       </template>
@@ -231,7 +228,7 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
             class="w-50"
           />
         </UFormField>
-        <UFormField :label="labels.player2Points" name="player2Points">
+        <UFormField :label="labels.player2Points" name="player2Points" required>
           <UInputNumber v-model="state.player2Points" class="w-50" />
         </UFormField>
 

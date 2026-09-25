@@ -12,6 +12,7 @@ defineProps<{
       <div class="space-y-4">
         <BattleInfo
           v-for="battle of stats.battles"
+          :key="battle.id"
           :player="stats.player"
           :battle
         />

@@ -3,29 +3,22 @@ useHead({
   title: 'Classifica',
 });
 
-const { data: stats, pending: pendingStats } = useFetchApi(
-  '/api/player-stats',
-  { lazy: true },
-);
+const { data: seasons, pending: pendingSeasons } =
+  await useFetchApi('/api/seasons');
 
-const { data: seasons, pending: pendingSeasons } = useFetchApi('/api/seasons', {
+const season = ref<Season | undefined>(seasons.value?.[0]);
+
+const { data: stats, pending: pendingStats } = useFetchPlayerStats({
   lazy: true,
 });
 
-const season = ref<Season>();
+const items = computed<PlayerStats[]>(() => {
+  const allStats = stats.value ?? [];
+  const seasonStats = season.value
+    ? getSeasonStandings(allStats, season.value.name)
+    : allStats.filter((s) => s.battles.length);
 
-const items = computed<PlayerStats[]>(() =>
-  (stats.value ?? []).filter((s) => {
-    if (!s.battles.length) return false;
-
-    if (season.value) {
-      const seasonMatch = s.battles.some(
-        (b) => b.season === season.value?.name,
-      );
-
-      if (!seasonMatch) return false;
-    }
-
+  return seasonStats.filter((s) => {
     const searchTerm = searchInput.value.trim().toLowerCase();
     if (!searchTerm) return true;
 
@@ -38,8 +31,8 @@ const items = computed<PlayerStats[]>(() =>
     if (factionMatch) return true;
 
     return false;
-  }),
-);
+  });
+});
 
 async function scrollIntoAccordionItem(indexStr?: string | string[]) {
   const index = +indexStr!;
@@ -77,14 +70,14 @@ const isFiltering = computed(
           :loading="pendingSeasons"
           :disabled="pendingSeasons"
           label-key="name"
-          placeholder="Filtra per stagione"
+          placeholder="Nessuna stagione"
           class="w-50 shrink-0"
           clear
         />
 
-        <span v-if="season" class="truncate text-muted text-sm min-w-0 flex-1">
-          {{ season.description }}
-        </span>
+        <SeasonDetailsModal v-if="season" :season>
+          <UButton size="sm" class="truncate min-w-0">Vedi stagione</UButton>
+        </SeasonDetailsModal>
       </div>
     </div>
 

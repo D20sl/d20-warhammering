@@ -67,6 +67,21 @@ export default defineAppConfig({
       ],
     },
 
+    calendar: {
+      compoundVariants: [
+        {
+          variant: 'solid',
+          class: { cellTrigger: 'data-[selected]:text-white' },
+        },
+      ],
+    },
+
+    modal: {
+      slots: {
+        header: 'border-b-accented',
+      },
+    },
+
     tooltip: {
       slots: {
         content: 'bg-abyss',
