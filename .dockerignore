@@ -1,0 +1,14 @@
+.git
+.claude
+.vscode
+node_modules
+.nuxt
+.nitro
+.output
+.data
+.cache
+dist
+logs
+*.log
+.env
+.env.*
