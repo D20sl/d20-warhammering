@@ -28,11 +28,7 @@ const PODIUM_COLORS = ['text-amber-300', 'text-blue-200', 'text-amber-500'];
       <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
         <div class="flex flex-col gap-4 md:sticky md:top-0 md:self-start">
           <div class="aspect-video overflow-hidden rounded-lg bg-black">
-            <NuxtImg
-              :src="season.coverImage"
-              provider="none"
-              class="size-full object-contain"
-            />
+            <img :src="season.coverImage" class="size-full object-contain" />
           </div>
 
           <dl class="space-y-3">
@@ -82,9 +78,7 @@ const PODIUM_COLORS = ['text-amber-300', 'text-blue-200', 'text-amber-500'];
               </li>
             </ol>
 
-            <p v-else class="text-sm text-muted">
-              Nessuna partita registrata in questa stagione
-            </p>
+            <EmptyState v-else />
           </section>
         </div>
 

@@ -19,19 +19,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/hints',
-    '@nuxt/image',
-    '@nuxt/ui',
-    'nuxt-auth-utils',
-  ],
-
-  image: {
-    // IPX only reads from public/, so uploads served by a Nitro route must
-    // skip it and load straight from their URL.
-    none: {},
-  },
+  modules: ['@nuxt/eslint', '@nuxt/hints', '@nuxt/ui', 'nuxt-auth-utils'],
 
   colorMode: {
     preference: 'dark',

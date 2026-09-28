@@ -48,9 +48,8 @@ const columns: TableColumn<Season>[] = [
     <template #name-cell="{ row }">
       <div class="flex gap-4 items-center">
         <div class="size-25 rounded-lg bg-black">
-          <NuxtImg
+          <img
             :src="row.original.coverImage"
-            provider="none"
             class="size-full rounded-lg object-contain"
           />
         </div>

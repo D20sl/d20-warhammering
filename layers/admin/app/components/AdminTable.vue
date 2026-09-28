@@ -55,7 +55,7 @@ const globalFilter = ref('');
 
     <template #loading>Caricamento...</template>
     <template #empty>
-      {{ data ? 'La ricerca non ha prodotto risultati' : 'Nessun dato' }}
+      <EmptyState />
     </template>
   </UTable>
 </template>

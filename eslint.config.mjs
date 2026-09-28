@@ -6,6 +6,7 @@ export default withNuxt([
     files: ['**/*.ts', '**/*.vue'],
     rules: {
       'vue/require-default-prop': 'off',
+      'vue/html-self-closing': 'off',
       '@typescript-eslint/prefer-literal-enum-member': 'off',
 
       'no-unused-vars': 'off',

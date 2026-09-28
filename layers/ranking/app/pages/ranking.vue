@@ -46,10 +46,6 @@ async function scrollIntoAccordionItem(indexStr?: string | string[]) {
 }
 
 const searchInput = ref('');
-
-const isFiltering = computed(
-  () => !!season.value || !!searchInput.value.trim(),
-);
 </script>
 
 <template>
@@ -112,13 +108,7 @@ const isFiltering = computed(
       </template>
     </UAccordion>
 
-    <p v-else class="text-muted text-sm text-center py-4">
-      {{
-        isFiltering
-          ? 'La ricerca non ha prodotto risultati'
-          : 'Nessun dato disponibile'
-      }}
-    </p>
+    <EmptyState v-else class="my-4" />
   </UCard>
 </template>
 

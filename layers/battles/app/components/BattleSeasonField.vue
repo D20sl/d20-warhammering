@@ -35,10 +35,9 @@ function select(season: Season | null) {
         class="flex h-32.5 overflow-hidden rounded-lg border border-accented"
       >
         <div class="flex w-32 shrink-0 items-center justify-center bg-black">
-          <NuxtImg
+          <img
             v-if="selected"
             :src="selected.coverImage"
-            provider="none"
             class="aspect-video w-full object-contain"
           />
           <UIcon v-else :name="AppIcons.GLOBE" class="size-8 text-muted" />
@@ -81,11 +80,7 @@ function select(season: Season | null) {
           tabindex="0"
           class="group relative aspect-video overflow-hidden rounded-lg border border-accented bg-black outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-          <NuxtImg
-            :src="season.coverImage"
-            provider="none"
-            class="size-full object-contain"
-          />
+          <img :src="season.coverImage" class="size-full object-contain" />
 
           <!-- pointer-events-none keeps the tap that reveals the overlay from also pressing a button under the finger.
                A mouse click also focuses the tile, so plain focus only opens the overlay on touch screens. -->
