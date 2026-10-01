@@ -18,22 +18,32 @@ const website = useRequestURL().origin;
       <p class="text-muted">
         Resa ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 (GDPR)
       </p>
-      <p class="text-muted">Ultimo aggiornamento: 25 settembre 2026</p>
+      <p class="text-muted">Ultimo aggiornamento: 1 ottobre 2026</p>
     </header>
 
     <section class="space-y-2">
       <h2 class="text-lg font-semibold">1. Perché queste informazioni</h2>
       <p>
         La presente informativa è resa, ai sensi dell'art. 13 del Regolamento
-        (UE) 2016/679 (di seguito «GDPR»), agli utenti che consultano il sito
-        D20 Warhammering, raggiungibile all'indirizzo
-        <a :href="website" class="underline" target="_blank" rel="noopener">{{
-          website
-        }}</a>
-        (di seguito, il «Sito»). L'informativa descrive le modalità con cui sono
-        trattati i dati personali raccolti tramite il Sito ed è valida
-        esclusivamente per esso, e non per altri siti web eventualmente
-        consultati dall'utente tramite link.
+        (UE) 2016/679 (di seguito «GDPR»):
+      </p>
+      <ul class="list-disc list-inside space-y-1 ml-2">
+        <li>
+          a chi crea o utilizza un account D20 (di seguito, l'«Account»),
+          tramite le pagine di registrazione e di accesso;
+        </li>
+        <li>
+          agli utenti del sito D20 Warhammering, raggiungibile all'indirizzo
+          <a :href="website" class="underline" target="_blank" rel="noopener">{{
+            website
+          }}</a>
+          (di seguito, il «Sito»).
+        </li>
+      </ul>
+      <p>
+        L'informativa descrive le modalità con cui sono trattati i dati
+        personali dell'Account e quelli raccolti tramite il Sito. Non si applica
+        ad altri siti web eventualmente consultati dall'utente tramite link.
       </p>
       <p>
         Il Sito è uno strumento amatoriale di registrazione e classifica delle
@@ -65,34 +75,43 @@ const website = useRequestURL().origin;
     <section class="space-y-2">
       <h2 class="text-lg font-semibold">3. Base giuridica del trattamento</h2>
       <p>
-        Il trattamento dei dati personali raccolti tramite il Sito si fonda
-        sulle seguenti basi giuridiche, ai sensi dell'art. 6 del GDPR:
+        Il trattamento dei dati personali dell'Account e di quelli raccolti
+        tramite il Sito si fonda sulle seguenti basi giuridiche, ai sensi
+        dell'art. 6 del GDPR:
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>
-          <strong>Esecuzione di un servizio richiesto dall'interessato</strong>
-          (art. 6, par. 1, lett. b, GDPR) per la creazione e la gestione
-          dell'account utente e per l'accesso al Sito;
+          <strong
+            >Esecuzione di un contratto di cui l'interessato è parte</strong
+          >
+          (art. 6, par. 1, lett. b, GDPR):
+          <ul class="list-[circle] list-inside space-y-1 ml-6 mt-1">
+            <li>
+              per i dati dell'Account, necessari a fornire all'utente l'accesso
+              ai servizi online di D20 che ha richiesto creando l'Account;
+            </li>
+            <li>
+              per i dati delle partite. Accedendo al Sito, l'utente chiede di
+              partecipare alla lega: il servizio offerto dal Sito consiste nel
+              registrare le partite giocate dai partecipanti, calcolare la
+              classifica e mostrarla agli altri utenti registrati;
+            </li>
+          </ul>
         </li>
         <li>
           <strong>Legittimo interesse</strong> del Titolare (art. 6, par. 1,
-          lett. f, GDPR) nella tenuta dello storico delle partite e della
-          classifica della lega per i partecipanti al gruppo di gioco, nonché
-          nella sicurezza tecnica del Sito;
-        </li>
-        <li>
-          <strong>Consenso</strong> dell'interessato (art. 6, par. 1, lett. a,
-          GDPR), prestato in forma libera, specifica, informata e inequivocabile
-          al momento dell'inserimento dei propri dati nel modulo di
-          registrazione partita.
+          lett. f, GDPR) nella sicurezza tecnica del Sito e del servizio di
+          autenticazione, per i dati di navigazione registrati nei log del
+          server.
         </li>
       </ul>
       <p>
-        La creazione di un account e l'inserimento dei dati nel Sito sono
-        facoltativi. Il rifiuto di conferirli rende impossibile l'accesso, la
-        registrazione della partita e l'apparizione del giocatore nella
-        classifica, ma non comporta alcuna ulteriore conseguenza. La
-        consultazione della classifica non richiede un account.
+        La creazione dell'Account e l'inserimento dei dati nel Sito sono
+        facoltativi. Il rifiuto di conferirli rende impossibile l'accesso al
+        Sito, la registrazione delle partite e l'apparizione del giocatore nella
+        classifica, ma non comporta alcuna ulteriore conseguenza. Tutte le
+        pagine del Sito, ad eccezione della presente informativa, sono
+        accessibili solo agli utenti che hanno effettuato l'accesso.
       </p>
     </section>
 
@@ -117,17 +136,17 @@ const website = useRequestURL().origin;
         metodo utilizzato nel sottoporre la richiesta al server, la dimensione
         del file ottenuto in risposta ed altri parametri relativi al sistema
         operativo e all'ambiente informatico dell'utente. Tali dati sono
-        registrati nei log tecnici del server che ospita il Sito (cfr. sez. 5)
-        e trattati per il tempo strettamente necessario alla diagnostica ed
-        alla sicurezza del servizio.
+        registrati nei log tecnici del server che ospita il Sito ed il servizio
+        di autenticazione (cfr. sez. 5) e trattati per il tempo strettamente
+        necessario alla diagnostica ed alla sicurezza del servizio.
       </p>
 
-      <h3 class="font-semibold mt-2">b) Dati dell'account</h3>
+      <h3 class="font-semibold mt-2">b) Dati dell'Account</h3>
       <p>
-        Per registrare una partita è necessario accedere con un account D20.
-        La creazione dell'account e l'accesso sono gestiti da un servizio di
-        autenticazione (Keycloak) installato sul server del Titolare. In fase
-        di registrazione vengono raccolti:
+        L'Account è unico per tutti i servizi online di D20 ed è necessario per
+        accedere al Sito. La creazione dell'Account e l'accesso sono gestiti da
+        un servizio di autenticazione (Keycloak) installato sul server del
+        Titolare. In fase di registrazione vengono raccolti:
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
         <li>indirizzo email;</li>
@@ -152,14 +171,18 @@ const website = useRequestURL().origin;
         >.
       </p>
       <p>
-        Il Sito conserva nel proprio database soltanto il nome e cognome
-        dell'utente ed un identificativo tecnico dell'account. Il nome e cognome
-        è utilizzato come nome del giocatore ed è quindi pubblicato nella
-        classifica (cfr. punto c).
+        Al primo accesso al Sito, l'utente viene iscritto alla lega come
+        giocatore. Da quel momento il Sito conserva nel proprio database il nome
+        e cognome dell'utente ed un identificativo tecnico dell'Account. Il nome
+        e cognome è utilizzato come nome del giocatore ed è quindi visibile agli
+        altri utenti registrati nella classifica (cfr. punto c). Chi crea
+        l'Account senza mai accedere al Sito non compare nella classifica.
       </p>
       <p>
-        Lo stesso account consente l'accesso anche agli altri servizi online di
-        D20, attuali e futuri, gestiti dal medesimo Titolare.
+        Lo stesso Account consente l'accesso anche agli altri servizi online di
+        D20, attuali e futuri, gestiti dal medesimo Titolare. I dati che
+        ciascuno di questi servizi raccoglie oltre a quelli dell'Account sono
+        descritti nella rispettiva informativa.
       </p>
 
       <h3 class="font-semibold mt-2">c) Dati delle partite</h3>
@@ -169,7 +192,10 @@ const website = useRequestURL().origin;
         dati:
       </p>
       <ul class="list-disc list-inside space-y-1 ml-2">
-        <li>nome (o nickname) dei due giocatori partecipanti alla partita;</li>
+        <li>
+          nome e cognome dei due giocatori partecipanti alla partita, come
+          indicati nei rispettivi account;
+        </li>
         <li>fazione utilizzata da ciascun giocatore;</li>
         <li>punteggio finale di ciascun giocatore;</li>
         <li>data della partita;</li>
@@ -179,20 +205,22 @@ const website = useRequestURL().origin;
         Tali dati sono trattati al solo fine di registrare l'esito della
         partita, calcolare la classifica della lega e mostrare lo storico
         partite e statistiche aggregate dei singoli giocatori. I nomi dei
-        giocatori e le statistiche associate sono pubblicati nella pagina
-        pubblica
-        <NuxtLink to="/ranking" class="underline">Classifica</NuxtLink> ed
-        accessibili a chiunque navighi sul Sito.
+        giocatori e le statistiche associate sono mostrati nella pagina
+        <NuxtLink to="/ranking" class="underline">Classifica</NuxtLink>,
+        visibile solo agli utenti registrati del Sito.
       </p>
       <p>
         <strong
           >Informativa ai sensi dell'art. 14 GDPR (dati raccolti presso
           terzi):</strong
         >
-        qualora un giocatore registri una partita inserendo il nome di un altro
-        partecipante, quest'ultimo ha diritto di essere informato del
-        trattamento e di richiederne in qualunque momento la rettifica o la
-        cancellazione, scrivendo al Titolare ai recapiti indicati alla sez. 2.
+        ciascuna partita è registrata da uno dei due giocatori, che inserisce
+        anche i dati dell'avversario. L'avversario può essere scelto solo fra
+        gli utenti registrati, che hanno quindi ricevuto la presente informativa
+        al momento dell'iscrizione. Il giocatore registrato da un altro
+        partecipante può richiedere in qualunque momento la rettifica o la
+        cancellazione della partita, scrivendo al Titolare ai recapiti indicati
+        alla sez. 2.
       </p>
 
       <h3 class="font-semibold mt-2">
@@ -217,7 +245,7 @@ const website = useRequestURL().origin;
         </li>
         <li>
           i cookie del servizio di autenticazione, che mantengono attiva la
-          sessione sull'account D20 fino alla sua scadenza o al logout.
+          sessione sull'Account fino alla sua scadenza o al logout.
         </li>
       </ul>
       <p>
@@ -253,8 +281,8 @@ const website = useRequestURL().origin;
         </li>
       </ul>
       <p>
-        I dati pubblicati sulla pagina Classifica sono inoltre liberamente
-        consultabili da chiunque acceda al Sito.
+        I dati mostrati nella pagina Classifica sono inoltre visibili a tutti
+        gli utenti registrati del Sito.
       </p>
       <p>
         Al di fuori di quanto indicato, i dati non sono comunicati a terzi né
@@ -271,15 +299,15 @@ const website = useRequestURL().origin;
           richiesta dell'interessato o al termine dell'attività del Sito;
         </li>
         <li>
-          <strong>Dati dell'account:</strong> conservati fino alla
-          cancellazione dell'account, che l'utente può richiedere in qualunque
-          momento al Titolare;
+          <strong>Dati dell'Account:</strong> conservati fino alla cancellazione
+          dell'Account, che l'utente può richiedere in qualunque momento al
+          Titolare;
         </li>
         <li><strong>Cookie di sessione:</strong> massimo 24 ore;</li>
         <li>
-          <strong>Log di navigazione tecnica:</strong> conservati sul server
-          del Titolare per il tempo necessario alla diagnostica ed alla
-          sicurezza del servizio.
+          <strong>Log di navigazione tecnica:</strong> conservati sul server del
+          Titolare per il tempo necessario alla diagnostica ed alla sicurezza
+          del servizio.
         </li>
       </ul>
     </section>
@@ -298,11 +326,9 @@ const website = useRequestURL().origin;
         </li>
         <li>diritto di limitazione del trattamento (art. 18 GDPR);</li>
         <li>diritto alla portabilità dei dati (art. 20 GDPR);</li>
-        <li>diritto di opposizione al trattamento (art. 21 GDPR);</li>
         <li>
-          diritto di revocare in qualsiasi momento il consenso eventualmente
-          prestato, senza pregiudicare la liceità del trattamento basata sul
-          consenso prima della revoca (art. 7, par. 3, GDPR).
+          diritto di opposizione al trattamento basato sul legittimo interesse
+          (art. 21 GDPR).
         </li>
       </ul>
       <p>

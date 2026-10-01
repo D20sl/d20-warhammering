@@ -241,8 +241,7 @@ watch(() => state.value.player2, assumeFactionForPlayer(2));
           <template #label>
             Ho letto la
             <ULink to="/privacy" target="_blank">privacy policy</ULink>
-            e ho il consenso del giocatore avversario al trattamento dei suoi
-            dati per la registrazione della partita.
+            e confermo che i dati della partita sono corretti.
           </template>
         </UCheckbox>
       </template>
