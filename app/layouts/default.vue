@@ -19,7 +19,7 @@ defineShortcuts({
 
     <div class="flex gap-2">
       <UButton
-        v-if="!isHome"
+        v-if="!isHome && loggedIn"
         to="/"
         size="sm"
         :icon="AppIcons.HOME"

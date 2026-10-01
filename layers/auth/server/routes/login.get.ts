@@ -34,7 +34,7 @@ const login = defineOAuthKeycloakEventHandler({
 
     const redirect = safeRedirect(
       getCookie(event, Cookies.AUTH_REDIRECT),
-      '/admin',
+      '/',
     );
 
     deleteCookie(event, Cookies.AUTH_REDIRECT);
@@ -62,7 +62,9 @@ const login = defineOAuthKeycloakEventHandler({
 
     deleteCookie(event, Cookies.AUTH_REDIRECT);
 
-    return sendRedirect(event, '/');
+    // Every page except the privacy policy sends a logged out user back here,
+    // so redirecting anywhere would loop through Keycloak.
+    throw createError({ status: 401, message: 'Accesso non riuscito' });
   },
 });
 
@@ -75,7 +77,7 @@ export default eventHandler(async (event) => {
     setCookie(
       event,
       Cookies.AUTH_REDIRECT,
-      safeRedirect(query.redirect, '/admin'),
+      safeRedirect(query.redirect, '/'),
       {
         httpOnly: true,
         sameSite: 'lax',

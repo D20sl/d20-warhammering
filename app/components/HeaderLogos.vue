@@ -12,12 +12,15 @@ useHead({
     { rel: 'preload', as: 'image', href: warhammerLogo },
   ],
 });
+
+const { loggedIn } = useUserSession();
 </script>
 
 <template>
   <header>
     <NuxtLink
       to="/"
+      :external="!loggedIn"
       class="flex flex-col justify-center items-center"
       :class="small ? 'w-30 md:w-50' : 'w-70'"
     >
