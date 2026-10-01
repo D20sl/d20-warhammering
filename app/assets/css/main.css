@@ -22,7 +22,6 @@
     background-position-x: left 40%;
     background-position-y: center;
     backdrop-filter: blur(8px);
-    overflow: hidden;
   }
 
   button {
