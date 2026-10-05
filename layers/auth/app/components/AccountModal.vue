@@ -51,7 +51,6 @@ const defaultFaction = computed<string | undefined | null>({
           <USelectMenu
             v-model="defaultFaction"
             :items="FACTIONS"
-            placeholder="Ultima fazione usata"
             clear
             class="w-full"
           />
