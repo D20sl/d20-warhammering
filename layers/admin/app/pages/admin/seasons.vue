@@ -69,7 +69,10 @@ const columns: TableColumn<Season>[] = [
         <DeleteModalButton
           description="Confermi di voler eliminare questa stagione dai record?"
           :endpoint="`/api/admin/seasons/${row.original.name}`"
-          @delete="refresh"
+          @delete="
+            refresh();
+            refreshPlayerStats();
+          "
         />
       </div>
     </template>

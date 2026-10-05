@@ -110,7 +110,10 @@ function getWinner({ original: battle }: TableRow<Battle>) {
         <DeleteModalButton
           description="Confermi di voler eliminare questa partita dai record?"
           :endpoint="`/api/admin/battles/${row.original.id}`"
-          @delete="refresh"
+          @delete="
+            refresh();
+            refreshPlayerStats();
+          "
         />
       </div>
     </template>

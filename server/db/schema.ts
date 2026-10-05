@@ -20,6 +20,8 @@ export const playersTable = d20schema.table('players', {
   name: text().primaryKey(),
 
   keycloakId: text().unique(),
+
+  defaultFaction: text(),
 });
 
 export const battlesTable = d20schema.table('battles', {

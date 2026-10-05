@@ -42,6 +42,7 @@ async function deletePlayer(name: string, close: () => void) {
   toast.add({ title: 'Giocatore eliminato' });
 
   refresh();
+  refreshPlayerStats();
   close();
 }
 </script>

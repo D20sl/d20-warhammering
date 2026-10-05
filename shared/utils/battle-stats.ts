@@ -69,8 +69,11 @@ export function getFactionsByUse(battles: BattleStats[]) {
  * them by outcome.
  */
 export function countAndSortBattles(battles: BattleStats[]) {
+  // Battles share a date often, and the date has no time. The higher id was
+  // registered later.
   battles.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a, b) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime() || b.id - a.id,
   );
 
   return splitByOutcome(battles);
@@ -83,11 +86,13 @@ export function countAndSortBattles(battles: BattleStats[]) {
 export function toPlayerStats(
   player: string,
   battles: BattleStats[],
+  defaultFaction?: string,
 ): PlayerStats {
   const { wins, losses, ties } = countAndSortBattles(battles);
 
   return {
     player,
+    defaultFaction,
     battles,
     wins,
     losses,
@@ -174,6 +179,7 @@ export function getSeasonStandings(stats: PlayerStats[], season: string) {
       toPlayerStats(
         s.player,
         s.battles.filter((b) => b.season === season),
+        s.defaultFaction,
       ),
     )
     .filter((s) => s.battles.length)

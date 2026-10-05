@@ -1,0 +1,1 @@
+ALTER TABLE "d20_warhammering"."players" ADD COLUMN "default_faction" text;

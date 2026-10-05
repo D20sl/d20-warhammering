@@ -15,19 +15,26 @@ export default eventHandler(async (): Promise<PlayerStats[]> => {
     );
 
   const record = query.reduce(
-    (acc, { players: { name }, battles }) => {
-      if (!acc[name]) acc[name] = [];
+    (acc, { players: { name, defaultFaction }, battles }) => {
+      if (!acc[name]) {
+        acc[name] = {
+          defaultFaction: defaultFaction ?? undefined,
+          battles: [],
+        };
+      }
 
       if (!battles) return acc;
 
-      acc[name].push(toBattleStats(battles, name));
+      acc[name].battles.push(toBattleStats(battles, name));
 
       return acc;
     },
-    {} as Record<string, BattleStats[]>,
+    {} as Record<string, { defaultFaction?: string; battles: BattleStats[] }>,
   );
 
   return Object.entries(record)
-    .map(([player, battles]) => toPlayerStats(player, battles))
+    .map(([player, { battles, defaultFaction }]) =>
+      toPlayerStats(player, battles, defaultFaction),
+    )
     .sort(compareStandings);
 });

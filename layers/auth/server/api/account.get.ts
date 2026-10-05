@@ -6,7 +6,7 @@ export default eventHandler(async (event): Promise<Account> => {
   const { user } = await requireUserSession(event);
 
   const player = await db.query.playersTable.findFirst({
-    columns: { name: true },
+    columns: { keycloakId: false },
     where: eq(playersTable.keycloakId, user.keycloakId),
   });
 
@@ -32,6 +32,7 @@ export default eventHandler(async (event): Promise<Account> => {
     name: player.name,
     battles: battles.length,
     mostUsedFaction: getFactionsByUse(battles)[0],
+    defaultFaction: player.defaultFaction ?? undefined,
     winRate: battles.length ? calculateWinRate(wins, battles) : undefined,
   };
 });

@@ -91,6 +91,8 @@ async function onSubmit(event: FormSubmitEvent<SeasonFormState>) {
 
   open.value = false;
 
+  // Renaming a season renames it on its battles too.
+  if (isEditMode.value) refreshPlayerStats();
   emit('submit');
 }
 </script>

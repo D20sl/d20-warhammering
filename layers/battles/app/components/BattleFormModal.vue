@@ -121,6 +121,7 @@ async function onSubmit(event: FormSubmitEvent<NewBattle>) {
 
   open.value = false;
 
+  refreshPlayerStats();
   emit('submit');
 }
 
@@ -135,11 +136,12 @@ function playersExcept(name: string) {
 function assumeFactionForPlayer(player: 1 | 2) {
   return (name: string) => {
     const playerStat = playerStats.value?.find((p) => p.player === name);
-    const faction = playerStat?.factions[0];
+    const faction =
+      playerStat?.defaultFaction ?? playerStat?.battles[0]?.ownData.faction;
 
     if (!faction) return;
 
-    state.value[`player${player}Faction`] = faction.name;
+    state.value[`player${player}Faction`] = faction;
   };
 }
 

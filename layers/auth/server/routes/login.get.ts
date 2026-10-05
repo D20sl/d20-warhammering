@@ -32,10 +32,7 @@ const login = defineOAuthKeycloakEventHandler({
     // /userinfo leaves roles out entirely. They are only in the access token.
     const accessToken = decodeJwtPayload(tokens.access_token);
 
-    const redirect = safeRedirect(
-      getCookie(event, Cookies.AUTH_REDIRECT),
-      '/',
-    );
+    const redirect = safeRedirect(getCookie(event, Cookies.AUTH_REDIRECT), '/');
 
     deleteCookie(event, Cookies.AUTH_REDIRECT);
 
@@ -74,18 +71,13 @@ export default eventHandler(async (event) => {
   // Keycloak only sends back its own parameters, so store the destination in a
   // cookie until the user returns.
   if (!query.code) {
-    setCookie(
-      event,
-      Cookies.AUTH_REDIRECT,
-      safeRedirect(query.redirect, '/'),
-      {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: !import.meta.dev,
-        path: '/',
-        maxAge: 60 * 10,
-      },
-    );
+    setCookie(event, Cookies.AUTH_REDIRECT, safeRedirect(query.redirect, '/'), {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: !import.meta.dev,
+      path: '/',
+      maxAge: 60 * 10,
+    });
   }
 
   return login(event);

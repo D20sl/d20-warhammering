@@ -1,5 +1,6 @@
 export type PlayerStats = {
   player: string;
+  defaultFaction?: string;
 
   factions: {
     name: string;
