@@ -17,6 +17,11 @@ export default defineNuxtConfig({
     },
   },
 
+  // Server sourcemaps are on by default and add a lot of memory to `nuxt build`.
+  // The prod server builds on the same 7.5GB box that runs the app, Keycloak
+  // and Openship.
+  sourcemap: { server: false },
+
   css: ['~/assets/css/main.css'],
 
   modules: ['@nuxt/eslint', '@nuxt/hints', '@nuxt/ui', 'nuxt-auth-utils'],
