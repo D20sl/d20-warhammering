@@ -2,6 +2,9 @@
 
 - When calling server API in the client, use the custom fetchApi function.
 - When creating a new cookie, use the enum Cookies to store the cookie name.
+- Error messages, from `createError` or from valibot schemas, go in
+  `ErrorMessages` (`shared/utils/error-messages.ts`). Reuse an existing key
+  before adding a new one. A message that includes a value is a function.
 - A layer's nuxt.config.ts stays an empty file unless the layer needs config.
   The file must exist, or Nuxt does not treat the directory as a layer.
 - Use `undefined` for missing values, not `null`. Only use `null` where an

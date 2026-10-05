@@ -8,7 +8,7 @@ export default eventHandler(async (event) => {
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: "La stagione deve avere un'immagine tematica",
+      message: ErrorMessages.SEASON_COVER_REQUIRED,
     });
   }
 

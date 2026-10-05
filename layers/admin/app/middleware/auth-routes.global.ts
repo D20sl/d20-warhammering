@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware((to) => {
     return abortNavigation(
       createError({
         statusCode: 403,
-        statusMessage: 'Non hai i permessi per questa sezione',
+        statusMessage: ErrorMessages.ADMIN_REQUIRED,
       }),
     );
   }

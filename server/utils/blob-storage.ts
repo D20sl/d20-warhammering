@@ -44,7 +44,7 @@ export async function uploadImageBlob(file: MultiPartData): Promise<string> {
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: "L'immagine deve essere in formato JPEG, PNG o WebP",
+      message: ErrorMessages.INVALID_IMAGE_TYPE,
     });
   }
 

@@ -9,7 +9,7 @@ export async function readSeasonMultipart(
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: 'Form data mancanti',
+      message: ErrorMessages.FORM_DATA_MISSING,
     });
   }
 
@@ -20,7 +20,7 @@ export async function readSeasonMultipart(
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: 'Campo "data" mancante',
+      message: ErrorMessages.FORM_DATA_FIELD_MISSING,
     });
   }
 
@@ -31,7 +31,7 @@ export async function readSeasonMultipart(
     throw createError({
       status: 400,
       statusMessage: 'Bad Request',
-      message: 'Campo "data" non è un JSON valido',
+      message: ErrorMessages.FORM_DATA_FIELD_INVALID_JSON,
     });
   }
 

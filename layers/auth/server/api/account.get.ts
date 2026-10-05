@@ -11,7 +11,7 @@ export default eventHandler(async (event): Promise<Account> => {
   });
 
   if (!player) {
-    throw createError({ status: 404, message: 'Giocatore non trovato' });
+    throw createError({ status: 404, message: ErrorMessages.PLAYER_NOT_FOUND });
   }
 
   const rows = await db

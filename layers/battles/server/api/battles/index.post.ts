@@ -4,7 +4,7 @@ import { battleSchema } from '~~/shared/types/battle';
 
 export default eventHandler(async (event) => {
   await requireUserSession(event, {
-    message: 'Devi accedere per registrare una partita',
+    message: ErrorMessages.LOGIN_REQUIRED_FOR_BATTLE,
   });
 
   const body = await validateBody(event, battleSchema);

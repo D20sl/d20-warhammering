@@ -61,7 +61,7 @@ const login = defineOAuthKeycloakEventHandler({
 
     // Every page except the privacy policy sends a logged out user back here,
     // so redirecting anywhere would loop through Keycloak.
-    throw createError({ status: 401, message: 'Accesso non riuscito' });
+    throw createError({ status: 401, message: ErrorMessages.LOGIN_FAILED });
   },
 });
 

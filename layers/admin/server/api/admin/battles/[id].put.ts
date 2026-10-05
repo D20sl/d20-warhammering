@@ -7,7 +7,10 @@ export default eventHandler(async (event) => {
   const id = Number(getRouterParam(event, 'id'));
 
   if (!Number.isInteger(id)) {
-    throw createError({ status: 400, message: 'ID non valido' });
+    throw createError({
+      status: 400,
+      message: ErrorMessages.BATTLE_ID_INVALID,
+    });
   }
 
   const body = await validateBody(event, battleSchema);
@@ -21,7 +24,7 @@ export default eventHandler(async (event) => {
     .returning({ id: battlesTable.id });
 
   if (!updated) {
-    throw createError({ status: 404, message: 'Partita non trovata' });
+    throw createError({ status: 404, message: ErrorMessages.BATTLE_NOT_FOUND });
   }
 
   return updated;

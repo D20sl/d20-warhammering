@@ -6,7 +6,10 @@ export default eventHandler(async (event) => {
   const name = getRouterParam(event, 'name');
 
   if (!name) {
-    throw createError({ status: 400, message: 'Nome stagione mancante' });
+    throw createError({
+      status: 400,
+      message: ErrorMessages.SEASON_NAME_MISSING,
+    });
   }
 
   const [deleted] = await db
@@ -15,7 +18,7 @@ export default eventHandler(async (event) => {
     .returning({ id: seasonsTable.name });
 
   if (!deleted) {
-    throw createError({ status: 404, message: 'Stagione non trovata' });
+    throw createError({ status: 404, message: ErrorMessages.SEASON_NOT_FOUND });
   }
 
   return deleted;

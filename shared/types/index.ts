@@ -6,5 +6,5 @@ export type LeafPartial<T> = {
 
 export const dateSchema = v.pipe(
   v.string(),
-  v.isoDate('Ti sembra una data valida questa?'),
+  v.isoDate(ErrorMessages.INVALID_DATE),
 );

@@ -7,20 +7,20 @@ export type NewBattle = typeof battlesTable.$inferInsert;
 
 const playerName = v.pipe(
   v.string(),
-  v.nonEmpty("Questo sito non supporta l'anonimato"),
+  v.nonEmpty(ErrorMessages.PLAYER_NAME_REQUIRED),
 );
 
 const playerFaction = v.pipe(
   v.string(),
-  v.nonEmpty('Si ma mi devi dire la fazione'),
-  v.values(FACTIONS, 'Ma sta fazione mica esiste oh'),
+  v.nonEmpty(ErrorMessages.FACTION_REQUIRED),
+  v.values(FACTIONS, ErrorMessages.FACTION_INVALID),
 );
 
 const playerPoints = v.pipe(
-  v.number('Bro i punti'),
-  v.integer('Le virgole le metti altrove, solo numeri interi qui'),
-  v.minValue(0, 'Meno di zero? Ma che schifo'),
-  v.maxValue(100, 'Più di 100? È letteralmente impossibile'),
+  v.number(ErrorMessages.POINTS_REQUIRED),
+  v.integer(ErrorMessages.POINTS_NOT_INTEGER),
+  v.minValue(0, ErrorMessages.POINTS_BELOW_MIN),
+  v.maxValue(100, ErrorMessages.POINTS_ABOVE_MAX),
 );
 
 export const battleSchema = v.pipe(
@@ -31,7 +31,7 @@ export const battleSchema = v.pipe(
       dateSchema,
       v.check(
         (val) => val <= today(getLocalTimeZone()).toString(),
-        'Dubito che questa partita si sia svolta nel futuro',
+        ErrorMessages.BATTLE_IN_FUTURE,
       ),
     ),
 
@@ -48,7 +48,7 @@ export const battleSchema = v.pipe(
   v.forward(
     v.check(
       ({ player1, player2 }) => player1 !== player2,
-      'Il disturbo di personalità multiple non è contemplato in questo sito',
+      ErrorMessages.BATTLE_SAME_PLAYER,
     ),
     ['player2'],
   ),

@@ -6,7 +6,10 @@ export default eventHandler(async (event) => {
   const name = getRouterParam(event, 'name');
 
   if (!name) {
-    throw createError({ status: 400, message: 'Nome stagione mancante' });
+    throw createError({
+      status: 400,
+      message: ErrorMessages.SEASON_NAME_MISSING,
+    });
   }
 
   const { data, coverImage } = await readSeasonMultipart(event);
@@ -22,7 +25,10 @@ export default eventHandler(async (event) => {
     });
 
     if (!existing) {
-      throw createError({ status: 404, message: 'Stagione non trovata' });
+      throw createError({
+        status: 404,
+        message: ErrorMessages.SEASON_NOT_FOUND,
+      });
     }
 
     coverImageUrl = existing.coverImage;
@@ -40,7 +46,7 @@ export default eventHandler(async (event) => {
     .returning({ name: seasonsTable.name });
 
   if (!updated) {
-    throw createError({ status: 404, message: 'Stagione non trovata' });
+    throw createError({ status: 404, message: ErrorMessages.SEASON_NOT_FOUND });
   }
 
   return updated;

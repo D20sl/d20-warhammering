@@ -50,7 +50,7 @@ export async function assertPlayersExist(names: string[]) {
   if (missing) {
     throw createError({
       status: 400,
-      message: `Il giocatore "${missing}" non esiste`,
+      message: ErrorMessages.PLAYER_DOES_NOT_EXIST(missing),
     });
   }
 }
@@ -74,6 +74,6 @@ async function renamePlayer(name: string, newName: string) {
 function nameTakenError(name: string) {
   return createError({
     status: 409,
-    message: `Il nome "${name}" appartiene già a un altro giocatore`,
+    message: ErrorMessages.PLAYER_NAME_TAKEN(name),
   });
 }

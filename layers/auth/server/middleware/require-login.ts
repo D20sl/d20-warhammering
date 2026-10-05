@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   if (user) return;
 
   if (pathname.startsWith('/api/')) {
-    throw createError({ status: 401, message: 'Devi accedere per continuare' });
+    throw createError({ status: 401, message: ErrorMessages.LOGIN_REQUIRED });
   }
 
   return sendRedirect(event, loginUrl(event.path));

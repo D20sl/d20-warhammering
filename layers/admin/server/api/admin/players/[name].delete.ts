@@ -6,7 +6,10 @@ export default eventHandler(async (event) => {
   const name = decodeURIComponent(getRouterParam(event, 'name') ?? '');
 
   if (!name) {
-    throw createError({ status: 400, message: 'Nome non valido' });
+    throw createError({
+      status: 400,
+      message: ErrorMessages.PLAYER_NAME_INVALID,
+    });
   }
 
   const [deleted] = await db
@@ -15,7 +18,7 @@ export default eventHandler(async (event) => {
     .returning({ name: playersTable.name });
 
   if (!deleted) {
-    throw createError({ status: 404, message: 'Giocatore non trovato' });
+    throw createError({ status: 404, message: ErrorMessages.PLAYER_NOT_FOUND });
   }
 
   return deleted;

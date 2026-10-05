@@ -5,7 +5,7 @@ import { playersTable } from '~~/server/db/schema';
 
 const accountPatchSchema = v.object({
   defaultFaction: v.nullable(
-    v.picklist(FACTIONS, 'Ma sta fazione mica esiste oh'),
+    v.picklist(FACTIONS, ErrorMessages.FACTION_INVALID),
   ),
 });
 
@@ -21,6 +21,6 @@ export default eventHandler(async (event) => {
     .returning({ name: playersTable.name });
 
   if (!updated) {
-    throw createError({ status: 404, message: 'Giocatore non trovato' });
+    throw createError({ status: 404, message: ErrorMessages.PLAYER_NOT_FOUND });
   }
 });
